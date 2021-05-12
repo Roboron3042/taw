@@ -104,7 +104,7 @@ public class Etiqueta implements Serializable {
 
     @Override
     public String toString() {
-        return "taw16.entity.Etiqueta[ idetiqueta=" + idetiqueta + " ]";
+        return "taw.entity.Etiqueta[ idetiqueta=" + idetiqueta + " ]";
     }
     
 }

@@ -118,7 +118,7 @@ public class Asientos implements Serializable {
 
     @Override
     public String toString() {
-        return "taw16.entity.Asientos[ asientosPK=" + asientosPK + " ]";
+        return "taw.entity.Asientos[ asientosPK=" + asientosPK + " ]";
     }
     
 }

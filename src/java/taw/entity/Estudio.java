@@ -120,7 +120,7 @@ public class Estudio implements Serializable {
 
     @Override
     public String toString() {
-        return "taw16.entity.Estudio[ idestudio=" + idestudio + " ]";
+        return "taw.entity.Estudio[ idestudio=" + idestudio + " ]";
     }
     
 }

@@ -49,6 +49,7 @@ CREATE TABLE Asientos (
 -- -----------------------------------------------------
 CREATE TABLE Usuario (
   idUsuario INT NOT NULL,
+  correo VARCHAR(50) UNIQUE NOT NULL,
   nombre VARCHAR(50),
   apellidos VARCHAR(45),
   domicilio VARCHAR(45),

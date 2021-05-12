@@ -208,7 +208,7 @@ public class Eventos implements Serializable {
 
     @Override
     public String toString() {
-        return "taw16.entity.Eventos[ ideventos=" + ideventos + " ]";
+        return "taw.entity.Eventos[ ideventos=" + ideventos + " ]";
     }
     
 }

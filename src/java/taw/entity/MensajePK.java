@@ -77,7 +77,7 @@ public class MensajePK implements Serializable {
 
     @Override
     public String toString() {
-        return "taw16.entity.MensajePK[ idmensaje=" + idmensaje + ", idusuario=" + idusuario + " ]";
+        return "taw.entity.MensajePK[ idmensaje=" + idmensaje + ", idusuario=" + idusuario + " ]";
     }
     
 }

@@ -32,6 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u"),
     @NamedQuery(name = "Usuario.findByIdusuario", query = "SELECT u FROM Usuario u WHERE u.idusuario = :idusuario"),
+    @NamedQuery(name = "Usuario.findByCorreo", query = "SELECT u FROM Usuario u WHERE u.correo = :correo"),
     @NamedQuery(name = "Usuario.findByNombre", query = "SELECT u FROM Usuario u WHERE u.nombre = :nombre"),
     @NamedQuery(name = "Usuario.findByApellidos", query = "SELECT u FROM Usuario u WHERE u.apellidos = :apellidos"),
     @NamedQuery(name = "Usuario.findByDomicilio", query = "SELECT u FROM Usuario u WHERE u.domicilio = :domicilio"),
@@ -48,6 +49,11 @@ public class Usuario implements Serializable {
     @NotNull
     @Column(name = "IDUSUARIO")
     private Integer idusuario;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "CORREO")
+    private String correo;
     @Size(max = 50)
     @Column(name = "NOMBRE")
     private String nombre;
@@ -73,8 +79,6 @@ public class Usuario implements Serializable {
     private String password;
     @ManyToMany(mappedBy = "usuarioList")
     private List<Eventos> eventosList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
-    private List<Mensaje> mensajeList;
 
     public Usuario() {
     }
@@ -83,12 +87,25 @@ public class Usuario implements Serializable {
         this.idusuario = idusuario;
     }
 
+    public Usuario(Integer idusuario, String correo) {
+        this.idusuario = idusuario;
+        this.correo = correo;
+    }
+
     public Integer getIdusuario() {
         return idusuario;
     }
 
     public void setIdusuario(Integer idusuario) {
         this.idusuario = idusuario;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
 
     public String getNombre() {
@@ -164,15 +181,6 @@ public class Usuario implements Serializable {
         this.eventosList = eventosList;
     }
 
-    @XmlTransient
-    public List<Mensaje> getMensajeList() {
-        return mensajeList;
-    }
-
-    public void setMensajeList(List<Mensaje> mensajeList) {
-        this.mensajeList = mensajeList;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -195,7 +203,7 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "taw16.entity.Usuario[ idusuario=" + idusuario + " ]";
+        return "taw.entity.Usuario[ idusuario=" + idusuario + " ]";
     }
     
 }
