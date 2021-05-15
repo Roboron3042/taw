@@ -33,10 +33,10 @@
         <h1>Inicia sesión en la plataforma</h1>
         
         <form method="POST" action="Login">
-            Usuario:<br>
-            <input type="text" name="user" value="" required/><br>
+            Correo:<br>
+            <input type="text" name="email" required/><br><br>
             Contraseña: <br>
-            <input type="text" name="password" value="" required/><br><br>
+            <input type="text" name="password" required/><br><br>
             <input type="submit" value="Iniciar sesión"/><br><br>
         </form>
         
