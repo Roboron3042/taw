@@ -31,7 +31,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u"),
-    @NamedQuery(name = "Usuario.findByIdusuario", query = "SELECT u FROM Usuario u WHERE u.idusuario = :idusuario"),
     @NamedQuery(name = "Usuario.findByCorreo", query = "SELECT u FROM Usuario u WHERE u.correo = :correo"),
     @NamedQuery(name = "Usuario.findByNombre", query = "SELECT u FROM Usuario u WHERE u.nombre = :nombre"),
     @NamedQuery(name = "Usuario.findByApellidos", query = "SELECT u FROM Usuario u WHERE u.apellidos = :apellidos"),
@@ -47,57 +46,42 @@ public class Usuario implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @Column(name = "IDUSUARIO")
-    private Integer idusuario;
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "CORREO")
     private String correo;
     @Size(max = 50)
     @Column(name = "NOMBRE")
     private String nombre;
-    @Size(max = 45)
+    @Size(max = 50)
     @Column(name = "APELLIDOS")
     private String apellidos;
-    @Size(max = 45)
+    @Size(max = 50)
     @Column(name = "DOMICILIO")
     private String domicilio;
-    @Size(max = 45)
+    @Size(max = 50)
     @Column(name = "RESIDENCIA")
     private String residencia;
     @Column(name = "EDAD")
     private Integer edad;
-    @Size(max = 45)
+    @Size(max = 50)
     @Column(name = "SEXO")
     private String sexo;
-    @Size(max = 45)
+    @Size(max = 50)
     @Column(name = "ROL")
     private String rol;
-    @Size(max = 45)
+    @Size(max = 50)
     @Column(name = "PASSWORD")
     private String password;
     @ManyToMany(mappedBy = "usuarioList")
     private List<Eventos> eventosList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
+    private List<Mensaje> mensajeList;
 
     public Usuario() {
     }
 
-    public Usuario(Integer idusuario) {
-        this.idusuario = idusuario;
-    }
-
-    public Usuario(Integer idusuario, String correo) {
-        this.idusuario = idusuario;
+    public Usuario(String correo) {
         this.correo = correo;
-    }
-
-    public Integer getIdusuario() {
-        return idusuario;
-    }
-
-    public void setIdusuario(Integer idusuario) {
-        this.idusuario = idusuario;
     }
 
     public String getCorreo() {
@@ -181,10 +165,19 @@ public class Usuario implements Serializable {
         this.eventosList = eventosList;
     }
 
+    @XmlTransient
+    public List<Mensaje> getMensajeList() {
+        return mensajeList;
+    }
+
+    public void setMensajeList(List<Mensaje> mensajeList) {
+        this.mensajeList = mensajeList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idusuario != null ? idusuario.hashCode() : 0);
+        hash += (correo != null ? correo.hashCode() : 0);
         return hash;
     }
 
@@ -195,7 +188,7 @@ public class Usuario implements Serializable {
             return false;
         }
         Usuario other = (Usuario) object;
-        if ((this.idusuario == null && other.idusuario != null) || (this.idusuario != null && !this.idusuario.equals(other.idusuario))) {
+        if ((this.correo == null && other.correo != null) || (this.correo != null && !this.correo.equals(other.correo))) {
             return false;
         }
         return true;
@@ -203,7 +196,7 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "taw.entity.Usuario[ idusuario=" + idusuario + " ]";
+        return "taw.entity.Usuario[ correo=" + correo + " ]";
     }
     
 }

@@ -50,7 +50,7 @@ public class Eventos implements Serializable {
     @NotNull
     @Column(name = "IDEVENTOS")
     private Integer ideventos;
-    @Size(max = 45)
+    @Size(max = 50)
     @Column(name = "TITULO")
     private String titulo;
     @Size(max = 255)
@@ -67,12 +67,12 @@ public class Eventos implements Serializable {
     private Integer aforo;
     @Column(name = "NMAXENTRADAS")
     private Integer nmaxentradas;
-    @Size(max = 45)
+    @Size(max = 50)
     @Column(name = "ASIENTOS")
     private String asientos;
     @JoinTable(name = "EVENTOS_HAS_USUARIO", joinColumns = {
         @JoinColumn(name = "IDEVENTOS", referencedColumnName = "IDEVENTOS")}, inverseJoinColumns = {
-        @JoinColumn(name = "IDUSUARIO", referencedColumnName = "IDUSUARIO")})
+        @JoinColumn(name = "IDUSUARIO", referencedColumnName = "CORREO")})
     @ManyToMany
     private List<Usuario> usuarioList;
     @ManyToMany(mappedBy = "eventosList")

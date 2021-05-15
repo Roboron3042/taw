@@ -41,13 +41,13 @@ public class Estudio implements Serializable {
     private Integer idestudio;
     @Column(name = "year")
     private Integer year;
-    @Size(max = 45)
+    @Size(max = 50)
     @Column(name = "EVENTO")
     private String evento;
-    @Size(max = 45)
+    @Size(max = 50)
     @Column(name = "USUARIOS")
     private String usuarios;
-    @Size(max = 45)
+    @Size(max = 50)
     @Column(name = "TITULO")
     private String titulo;
 

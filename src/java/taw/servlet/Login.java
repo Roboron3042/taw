@@ -38,13 +38,13 @@ public class Login extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        String user = request.getParameter("user");
+        String email = request.getParameter("email");
         String password = request.getParameter("password");
         String url = "login.jsp";
         String status = "Contraseña o usuario incorrectos";
         request.setAttribute("status", status);
         
-        Usuario usuario = this.usuarioFacade.findByEmail(user);
+        Usuario usuario = this.usuarioFacade.findByEmail(email);
         
         if(usuario != null){
             if(password.equals(usuario.getPassword())){

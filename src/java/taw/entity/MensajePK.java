@@ -10,6 +10,7 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -24,13 +25,14 @@ public class MensajePK implements Serializable {
     private int idmensaje;
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "IDUSUARIO")
-    private int idusuario;
+    private String idusuario;
 
     public MensajePK() {
     }
 
-    public MensajePK(int idmensaje, int idusuario) {
+    public MensajePK(int idmensaje, String idusuario) {
         this.idmensaje = idmensaje;
         this.idusuario = idusuario;
     }
@@ -43,11 +45,11 @@ public class MensajePK implements Serializable {
         this.idmensaje = idmensaje;
     }
 
-    public int getIdusuario() {
+    public String getIdusuario() {
         return idusuario;
     }
 
-    public void setIdusuario(int idusuario) {
+    public void setIdusuario(String idusuario) {
         this.idusuario = idusuario;
     }
 
@@ -55,7 +57,7 @@ public class MensajePK implements Serializable {
     public int hashCode() {
         int hash = 0;
         hash += (int) idmensaje;
-        hash += (int) idusuario;
+        hash += (idusuario != null ? idusuario.hashCode() : 0);
         return hash;
     }
 
@@ -69,7 +71,7 @@ public class MensajePK implements Serializable {
         if (this.idmensaje != other.idmensaje) {
             return false;
         }
-        if (this.idusuario != other.idusuario) {
+        if ((this.idusuario == null && other.idusuario != null) || (this.idusuario != null && !this.idusuario.equals(other.idusuario))) {
             return false;
         }
         return true;

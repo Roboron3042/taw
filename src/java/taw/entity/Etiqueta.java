@@ -41,7 +41,7 @@ public class Etiqueta implements Serializable {
     @NotNull
     @Column(name = "IDETIQUETA")
     private Integer idetiqueta;
-    @Size(max = 45)
+    @Size(max = 50)
     @Column(name = "ETIQUETA")
     private String etiqueta;
     @JoinTable(name = "ETIQUETA_HAS_EVENTOS", joinColumns = {
