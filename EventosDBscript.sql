@@ -18,14 +18,14 @@ DROP TABLE Eventos;
 -- -----------------------------------------------------
 CREATE TABLE Eventos (
   idEventos INT NOT NULL,
-  titulo VARCHAR(45),
+  titulo VARCHAR(50),
   descripcion VARCHAR(255),
   fecha INT,
   fechalim INT,
   coste FLOAT,
   aforo INT,
   nmaxentradas INT,
-  asientos VARCHAR(45),
+  asientos VARCHAR(50),
   PRIMARY KEY (idEventos));
 
 -- -----------------------------------------------------
@@ -48,17 +48,16 @@ CREATE TABLE Asientos (
 -- Table Usuario
 -- -----------------------------------------------------
 CREATE TABLE Usuario (
-  idUsuario INT NOT NULL,
-  correo VARCHAR(50) UNIQUE NOT NULL,
+  correo VARCHAR(50) NOT NULL,
   nombre VARCHAR(50),
-  apellidos VARCHAR(45),
-  domicilio VARCHAR(45),
-  residencia VARCHAR(45),
+  apellidos VARCHAR(50),
+  domicilio VARCHAR(50),
+  residencia VARCHAR(50),
   edad INT,
-  sexo VARCHAR(45),
-  rol VARCHAR(45),
-  password VARCHAR(45),
-  PRIMARY KEY (idUsuario));
+  sexo VARCHAR(50),
+  rol VARCHAR(50),
+  password VARCHAR(50),
+  PRIMARY KEY (correo));
 
 
 -- -----------------------------------------------------
@@ -67,9 +66,9 @@ CREATE TABLE Usuario (
 CREATE TABLE Estudio (
   idEstudio INT NOT NULL,
   "year" INT,
-  evento VARCHAR(45),
-  usuarios VARCHAR(45),
-  titulo VARCHAR(45),
+  evento VARCHAR(50),
+  usuarios VARCHAR(50),
+  titulo VARCHAR(50),
   PRIMARY KEY (idEstudio));
 
 
@@ -80,11 +79,11 @@ CREATE TABLE Mensaje (
   Idmensaje INT NOT NULL UNIQUE,
   fecha INT,
   contenido VARCHAR(255),
-  idUsuario INT NOT NULL,
+  idUsuario VARCHAR(50) NOT NULL,
   PRIMARY KEY (Idmensaje, idUsuario),
   CONSTRAINT fk_Mensaje_Usuario1
     FOREIGN KEY (idUsuario)
-    REFERENCES Usuario (idUsuario)
+    REFERENCES Usuario (correo)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
@@ -119,7 +118,7 @@ CREATE TABLE Chat_has_Mensaje (
 -- -----------------------------------------------------
 CREATE TABLE Eventos_has_Usuario (
   idEventos INT NOT NULL,
-  idUsuario INT NOT NULL,
+  idUsuario VARCHAR(50) NOT NULL,
   PRIMARY KEY (idEventos, idUsuario),
   CONSTRAINT fk_Eventos_has_Usuario_Eventos1
     FOREIGN KEY (idEventos)
@@ -128,7 +127,7 @@ CREATE TABLE Eventos_has_Usuario (
     ON UPDATE NO ACTION,
   CONSTRAINT fk_Eventos_has_Usuario_Usuario1
     FOREIGN KEY (idUsuario)
-    REFERENCES Usuario (idUsuario)
+    REFERENCES Usuario (correo)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
@@ -137,7 +136,7 @@ CREATE TABLE Eventos_has_Usuario (
 -- -----------------------------------------------------
 CREATE TABLE Etiqueta (
   idEtiqueta INT NOT NULL,
-  etiqueta VARCHAR(45),
+  etiqueta VARCHAR(50),
   PRIMARY KEY (idEtiqueta));
 
 
