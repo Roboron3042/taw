@@ -14,9 +14,9 @@
         <title>Listado de usuarios</title>
     </head>
     <%
-    Usuario usuario = (Usuario) session.getAttribute("user");
-        if(usuario != null){
-            if(!usuario.getRol().equals("admin")){
+    Usuario sessionUser = (Usuario) session.getAttribute("user");
+        if(sessionUser != null){
+            if(!sessionUser.getRol().equals("admin")){
                 response.sendRedirect("userHome.jsp");
             }
         } else {

@@ -36,9 +36,9 @@
             <select name="rol">
                 <option>user</option>
                 <%
-                Usuario usuario = (Usuario) session.getAttribute("user");
-                if(usuario != null){
-                    if(usuario.getRol().equals("admin")){
+                Usuario sessionUser = (Usuario) session.getAttribute("user");
+                if(sessionUser != null){
+                    if(sessionUser.getRol().equals("admin")){
                 %>
                 <option>admin</option>
                 <option>creator</option>

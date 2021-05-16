@@ -22,7 +22,7 @@ import taw.entity.Usuario;
  *
  * @author rober
  */
-public class UserList extends HttpServlet {
+public class UserDelete extends HttpServlet {
 
     @EJB
     UsuarioFacade usuarioFacade;
@@ -38,18 +38,22 @@ public class UserList extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
         HttpSession session = request.getSession();
         
         Usuario sessionUser = (Usuario) session.getAttribute("user");
         if (sessionUser == null) { 
             response.sendRedirect("login.jsp");
-        } else {                        
-            List<Usuario> userList = usuarioFacade.findAll();
-            request.setAttribute("userList", userList);
-            System.out.println(userList);
-
-            RequestDispatcher rd = request.getRequestDispatcher("userList.jsp");
+        } else if (!sessionUser.getRol().equals("admin")){
+            response.sendRedirect("userHome.jsp");
+        } else {
+            String email = request.getParameter("email");
+            if(email != null){
+                Usuario user = usuarioFacade.findByEmail(email);
+                if(user != null){
+                    usuarioFacade.remove(user);
+                }
+            }
+            RequestDispatcher rd = request.getRequestDispatcher("UserList");
             rd.forward(request, response);
         }
     }
