@@ -46,7 +46,7 @@
                 <option>analyst</option>
                 <%
                     } else {
-                        response.sendRedirect("UserHome");
+                        response.sendRedirect("userHome.jsp");
                     }
                 }
                 %>

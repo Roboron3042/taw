@@ -8,6 +8,10 @@
         <servlet-name>Registro</servlet-name>
         <servlet-class>taw.servlet.Registro</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UserList</servlet-name>
+        <servlet-class>taw.servlet.UserList</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>Registro</servlet-name>
         <url-pattern>/Registro</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserList</servlet-name>
+        <url-pattern>/UserList</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

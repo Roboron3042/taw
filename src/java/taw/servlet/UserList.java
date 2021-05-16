@@ -7,6 +7,7 @@ package taw.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,9 +22,8 @@ import taw.entity.Usuario;
  *
  * @author rober
  */
-public class Registro extends HttpServlet {
+public class UserList extends HttpServlet {
 
-    
     @EJB
     UsuarioFacade usuarioFacade;
     /**
@@ -38,50 +38,20 @@ public class Registro extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
+        HttpSession session = request.getSession();
+        
+        Usuario user = (Usuario) session.getAttribute("user");
+        if (user == null) { 
+            response.sendRedirect("login.jsp");
+        } else {                        
+            List<Usuario> userList = usuarioFacade.findAll();
+            request.setAttribute("userList", userList);
+            System.out.println(userList);
 
-        String status = "Usuario creado satisfactoriamente, inicie sesión para continuar.";
-        String url = "login.jsp";
-        HttpSession sesion = request.getSession();
-        Usuario sesionUser = (Usuario) sesion.getAttribute("user");
-        if(sesionUser != null && sesionUser.getRol().equals("admin")){
-            url = "UserList";
+            RequestDispatcher rd = request.getRequestDispatcher("userList.jsp");
+            rd.forward(request, response);
         }
-        Usuario user = usuarioFacade.findByEmail((String) request.getParameter("email"));
-        
-        if(user != null){
-            if(sesionUser != null && sesionUser.getRol().equals("admin")){
-                user.setCorreo(request.getParameter("email"));
-                user.setPassword(request.getParameter("password"));
-                user.setNombre(request.getParameter("name"));
-                user.setApellidos(request.getParameter("surname"));
-                user.setDomicilio(request.getParameter("address"));
-                user.setResidencia(request.getParameter("home"));
-                user.setEdad(Integer.parseInt(request.getParameter("age")));
-                user.setSexo(request.getParameter("sex"));
-                user.setRol(request.getParameter("rol"));
-                usuarioFacade.edit(user);
-            } else {
-                status = "Este correo ya está en uso";
-            }
-        } else {
-            user = new Usuario();
-            System.out.println((String) request.getParameter("email"));
-            user.setCorreo(request.getParameter("email"));
-            user.setPassword(request.getParameter("password"));
-            user.setNombre(request.getParameter("name"));
-            user.setApellidos(request.getParameter("surname"));
-            user.setDomicilio(request.getParameter("address"));
-            user.setResidencia(request.getParameter("home"));
-            user.setEdad(Integer.parseInt(request.getParameter("age")));
-            user.setSexo(request.getParameter("sex"));
-            user.setRol(request.getParameter("rol"));
-            usuarioFacade.create(user);
-        }
-        
-        
-        request.setAttribute("status", status);
-        RequestDispatcher  rd = request.getRequestDispatcher(url);
-        rd.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

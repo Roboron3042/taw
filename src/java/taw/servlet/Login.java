@@ -51,9 +51,9 @@ public class Login extends HttpServlet {
                 sesion.setAttribute("user", usuario);
                 
                 if(usuario.getRol().equals("admin")){
-                    url = "AdminHome";
+                    url = "adminHome.jsp";
                 } else {
-                    url = "UserHome";
+                    url = "userHome.jsp";
                 }
 
             } 

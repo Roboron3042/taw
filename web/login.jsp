@@ -16,9 +16,9 @@
         Usuario usuario = (Usuario) session.getAttribute("user");
         if(usuario != null){
             if(usuario.getRol().equals("admin")){
-                response.sendRedirect("AdminHome");
+                response.sendRedirect("adminHome.jsp");
             } else {
-                response.sendRedirect("UserHome");
+                response.sendRedirect("userHome.jsp");
             }
             return;
         }
@@ -34,7 +34,7 @@
         
         <form method="POST" action="Login">
             Correo:<br>
-            <input type="text" name="email" required/><br><br>
+            <input type="text" name="email" maxlength ="50" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required/><br><br>
             Contraseña: <br>
             <input type="text" name="password" required/><br><br>
             <input type="submit" value="Iniciar sesión"/><br><br>
