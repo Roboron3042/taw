@@ -30,7 +30,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
         super(Usuario.class);
     }
     
-        public Usuario findByEmail(String email){
+    public Usuario findByEmail(String email){
             
         Query q = this.getEntityManager().createNamedQuery("Usuario.findByCorreo");
         q.setParameter("correo", email);

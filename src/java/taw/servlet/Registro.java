@@ -21,8 +21,9 @@ import taw.entity.Usuario;
  *
  * @author rober
  */
-public class Login extends HttpServlet {
+public class Registro extends HttpServlet {
 
+    
     @EJB
     UsuarioFacade usuarioFacade;
     /**
@@ -37,34 +38,50 @@ public class Login extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        String url = "login.jsp";
-        String status = "Contraseña o usuario incorrectos";
-        
-        Usuario usuario = this.usuarioFacade.findByEmail(email);
-        
-        if(usuario != null){
-            if(password.equals(usuario.getPassword())){
-                HttpSession sesion = request.getSession();
-                sesion.setAttribute("user", usuario);
-                
-                if(usuario.getRol().equals("admin")){
-                    url = "AdminHome";
-                } else {
-                    url = "UserHome";
-                }
 
-            } 
+        String status = "Usuario creado satisfactoriamente, inicie sesión para continuar.";
+        String url = "login.jsp";
+        HttpSession sesion = request.getSession();
+        Usuario sesionUser = (Usuario) sesion.getAttribute("user");
+        if(sesionUser != null && sesionUser.getRol().equals("admin")){
+            url = "userList.jsp";
         }
+        Usuario user = usuarioFacade.findByEmail((String) request.getParameter("email"));
+        
+        if(user != null){
+            if(sesionUser != null && sesionUser.getRol().equals("admin")){
+                user.setCorreo(request.getParameter("email"));
+                user.setPassword(request.getParameter("password"));
+                user.setNombre(request.getParameter("name"));
+                user.setApellidos(request.getParameter("surname"));
+                user.setDomicilio(request.getParameter("address"));
+                user.setResidencia(request.getParameter("home"));
+                user.setEdad(Integer.parseInt(request.getParameter("age")));
+                user.setSexo(request.getParameter("sex"));
+                user.setRol(request.getParameter("rol"));
+                usuarioFacade.edit(user);
+            } else {
+                status = "Este correo ya está en uso";
+            }
+        } else {
+            user = new Usuario();
+            System.out.println((String) request.getParameter("email"));
+            user.setCorreo(request.getParameter("email"));
+            user.setPassword(request.getParameter("password"));
+            user.setNombre(request.getParameter("name"));
+            user.setApellidos(request.getParameter("surname"));
+            user.setDomicilio(request.getParameter("address"));
+            user.setResidencia(request.getParameter("home"));
+            user.setEdad(Integer.parseInt(request.getParameter("age")));
+            user.setSexo(request.getParameter("sex"));
+            user.setRol(request.getParameter("rol"));
+            usuarioFacade.create(user);
+        }
+        
         
         request.setAttribute("status", status);
         RequestDispatcher  rd = request.getRequestDispatcher(url);
         rd.forward(request, response);
-
-
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

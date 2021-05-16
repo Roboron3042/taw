@@ -14,46 +14,51 @@
     </head>
     <body>
         <form method="post" action="Registro">
-           <h1>Formulario de Registro</h1>
+            <h1>Formulario de Registro</h1>
            
             Correo:<br>
             <input type="text" name="email" maxlength ="50" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required/><br><br>
             Contraseña:<br>
             <input type="text" name="password" minlength="8" maxlength ="50" required/><br><br>
             Nombre:<br>
-            <input type="text" name="name" maxlength ="50" pattern="[A-Za-z]+" required/><br><br>
+            <input type="text" name="name" maxlength ="50" pattern="[A-Za-zÀ-ÿ\u00f1\u00d1]+" required/><br><br>
             Apellidos:<br>
-            <input type="text" name="surname" maxlength ="50" pattern="[A-Za-z]+" required/><br><br>
+            <input type="text" name="surname" maxlength ="50" pattern="[A-Za-zÀ-ÿ\u00f1\u00d1]+" required/><br><br>
             Domicilio:<br>
-            <input type="text" name="address" maxlength ="50" pattern="[A-Za-z0-9]+" required/><br><br>
+            <input type="text" name="address" maxlength ="50" pattern="[A-Za-zÀ-ÿ\u00f1\u00d10-9]+" required/><br><br>
             Residencia:<br>
-            <input type="text" name="home" maxlength ="50" pattern="[A-Za-z0-9]+" required/><br><br>
+            <input type="text" name="home" maxlength ="50" pattern="[A-Za-zÀ-ÿ\u00f1\u00d10-9]+" required/><br><br>
             Edad:<br>
             <input type="number" name="age" value="20" pattern="[0-9]" required/><br><br>
             Sexo:<br>
-            <input type="text" name="sex" maxlength ="50" pattern="[A-Za-z]+" required/><br><br>
-            <%
-            Usuario usuario = (Usuario) session.getAttribute("user");
-            if(usuario != null){
-                if(usuario.getRol().equals("admin")){
-            %>
+            <input type="text" name="sex" maxlength ="50" pattern="[A-Za-zÀ-ÿ\u00f1\u00d1]+" required/><br><br>
             Rol:<br>
             <select name="rol">
                 <option>user</option>
+                <%
+                Usuario usuario = (Usuario) session.getAttribute("user");
+                if(usuario != null){
+                    if(usuario.getRol().equals("admin")){
+                %>
                 <option>admin</option>
                 <option>creator</option>
                 <option>teleoperator</option>
                 <option>analyst</option>
+                <%
+                    } else {
+                        response.sendRedirect("UserHome");
+                    }
+                }
+                %>
             </select><br><br>
             <%
-                } else {
-                response.sendRedirect("UserHome");
-                }
-            } else {
-                request.setAttribute("rol", "user");
-            }
+            String status = (String) request.getAttribute("status");
+            if (status == null) {
+                status = "Rellena todos los campos para continuar";
+            } 
             %>
-            <input type="submit" value="Registrar"/>
+            <%=status%><br><br>
+            <input type="submit" value="Registrar usuario"/>
         </form>
     </body>
 </html>
