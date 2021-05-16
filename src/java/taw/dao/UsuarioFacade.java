@@ -59,6 +59,68 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
         
         return q.getResultList();
     }
+    
+    public List<Usuario> findByEdadOrResidenciaOrSexo (Integer edadInicio,Integer edadFin, String sexo) {
+        List<Usuario> lista;
+        
+        
+        //Caso 1:  sexo = null
+        if (sexo == null) {
+            lista = findByRangoEdad (edadInicio, edadFin);
+            
+        } 
+        //Caso 2: edadInicio o edadFin = null
+        else if(edadInicio == null || edadFin == null){
+            lista = findBySexoU(sexo); 
+        }
+        //Caso 4:residencia = null
+        else{
+            lista = finByEdadAndSexo(edadInicio,edadFin,sexo);
+        }
+        
+        return lista;       
+    }
+    
+    public List<Usuario> findBySexoU (String sexo) {
+        Query q;
+        q = em.createQuery("SELECT u FROM Usuario u WHERE u.rol = 'user' and u.sexo = :sexo");
+        q.setParameter("sexo", sexo);
+        return q.getResultList(); 
+    }
+  
+    
+    public List<Usuario> findByRangoEdad (Integer edadInicio,Integer edadFin) {
+        Query q;
+        q = em.createQuery("SELECT u FROM Usuario u WHERE u.rol = 'user' and u.edad >= :edadInicio and u.edad <= :edadFin");
+        q.setParameter("edadInicio", edadInicio);
+        q.setParameter("edadFin", edadFin);
+        return q.getResultList(); 
+    }
+    
+    public List<Usuario> finByEdadAndSexo (Integer edadInicio,Integer edadFin, String sexo) {
+        Query q;
+        q = em.createQuery("SELECT u FROM Usuario u WHERE u.rol = 'user' and u.edad >= :edadInicio and u.edad <= :edadFin and u.sexo = :sexo");
+        q.setParameter("edadInicio", edadInicio);
+        q.setParameter("edadFin", edadFin);
+        q.setParameter("sexo", sexo);
+        return q.getResultList(); 
+    }
+    
+ 
+    
+    public List<Usuario> findByResidenciaAndSexo (String residencia, String sexo) {
+        Query q;
+        q = em.createQuery("SELECT u FROM Usuario u WHERE u.rol = 'user' and u.residencia = :residencia and u.sexo = :sexo");
+        q.setParameter("sexo", sexo);
+        q.setParameter("residencia", residencia);
+        return q.getResultList(); 
+    }
+    
+    public List<Usuario> findAllUser () {
+        Query q;
+        q = em.createQuery("SELECT u FROM Usuario u WHERE u.rol = 'user'");
+        return q.getResultList(); 
+    }
 
 
     
