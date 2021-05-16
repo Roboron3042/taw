@@ -31,7 +31,7 @@
         <%
         if (eventList == null || eventList.isEmpty()) {
         %>          
-            <h2>Ningún evento ha sido creado todavía</h2>
+            <h2>Ningún evento ha sido creado o encontrado</h2>
          <%
         } else {
         %>

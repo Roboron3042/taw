@@ -30,10 +30,26 @@
         <%
         if (userList == null || userList.isEmpty()) {
         %>          
-            <h2>Ningún usuario ha sido creado todavía</h2>
+            <h2>Ningún usuario ha sido creado o encontrado</h2>
          <%
         } else {
         %>
+        <form action="UserListFilter" method="POST">
+            Filtrar por: 
+            <select name="filterType">
+                <option>Correo</option>
+                <option>Nombre</option>
+                <option>Apellidos</option>
+                <option>Domicilio</option>
+                <option>Residencia</option>
+                <option>Edad</option>
+                <option>Sexo</option>
+                <option>Rol</option>
+                <option>Password</option>
+            </select>
+            <input type="text" name="filterValue"/>
+            <input type="submit" value="Filtrar" />
+        </form><br>
         <table border="1" style="width:100%">
         <tr>
             <th>Correo</th>

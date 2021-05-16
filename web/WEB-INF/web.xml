@@ -32,6 +32,10 @@
         <servlet-name>EventDelete</servlet-name>
         <servlet-class>taw.servlet.EventDelete</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UserListFilter</servlet-name>
+        <servlet-class>taw.servlet.UserListFilter</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -63,6 +67,10 @@
     <servlet-mapping>
         <servlet-name>EventDelete</servlet-name>
         <url-pattern>/EventDelete</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserListFilter</servlet-name>
+        <url-pattern>/UserListFilter</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

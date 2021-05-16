@@ -5,6 +5,7 @@
  */
 package taw.dao;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -41,6 +42,22 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
         }
         
         return usuario;
+    }
+    
+    public List<Usuario> findByAge(Integer age){
+            
+        Query q = this.getEntityManager().createNamedQuery("Usuario.findByEdad");
+        q.setParameter("edad", age);
+        
+        return q.getResultList();
+    }
+    
+    public List<Usuario> findByString(String string, String value){
+            
+        Query q = this.getEntityManager().createNamedQuery("Usuario.findBy" + string);
+        q.setParameter(string.toLowerCase(), value);
+        
+        return q.getResultList();
     }
 
 
