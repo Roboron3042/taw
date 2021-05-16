@@ -8,6 +8,7 @@ package taw.dao;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import taw.entity.Eventos;
 
 /**
@@ -27,5 +28,17 @@ public class EventosFacade extends AbstractFacade<Eventos>{
     
     public EventosFacade() {
         super(Eventos.class);
+    }
+
+    public Eventos findById(String id) {
+        Query q = this.getEntityManager().createNamedQuery("Eventos.findByIdeventos");
+        q.setParameter("id", id);
+        Eventos evento = null;
+        
+        if(!q.getResultList().isEmpty()){
+            evento = (Eventos) q.getResultList().get(0);
+        }
+        
+        return evento;
     }
 }

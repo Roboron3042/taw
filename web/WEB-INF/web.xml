@@ -24,6 +24,14 @@
         <servlet-name>Logout</servlet-name>
         <servlet-class>taw.servlet.Logout</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EventList</servlet-name>
+        <servlet-class>taw.servlet.EventList</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EventDelete</servlet-name>
+        <servlet-class>taw.servlet.EventDelete</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -47,6 +55,14 @@
     <servlet-mapping>
         <servlet-name>Logout</servlet-name>
         <url-pattern>/Logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EventList</servlet-name>
+        <url-pattern>/EventList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EventDelete</servlet-name>
+        <url-pattern>/EventDelete</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
