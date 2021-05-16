@@ -72,6 +72,7 @@
         %>
         <ul>
             <li><a href="adminHome.jsp">Volver al menú de Administración</a> </li>
+            <li><a href="Logout">Cerrar sesión</a></li>
             <li><a href="#top">Volver arriba</a></li>
         </ul>
     </body>

@@ -6,25 +6,19 @@
 package taw.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import taw.dao.UsuarioFacade;
-import taw.entity.Usuario;
 
 /**
  *
  * @author rober
  */
-public class Login extends HttpServlet {
+public class Logout extends HttpServlet {
 
-    @EJB
-    UsuarioFacade usuarioFacade;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -37,30 +31,11 @@ public class Login extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession();
         
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        String url = "login.jsp";
-        String status = "Contraseña o usuario incorrectos";
-        
-        Usuario user = this.usuarioFacade.findByEmail(email);
-        
-        if(user != null){
-            if(password.equals(user.getPassword())){
-                HttpSession sesion = request.getSession();
-                sesion.setAttribute("user", user);
-                
-                if(user.getRol().equals("admin")){
-                    url = "adminHome.jsp";
-                } else {
-                    url = "userHome.jsp";
-                }
-
-            } 
-        }
-        
-        request.setAttribute("status", status);
-        RequestDispatcher  rd = request.getRequestDispatcher(url);
+        session.removeAttribute("user");
+        request.setAttribute("status", "Se ha cerrado sesión");
+        RequestDispatcher  rd = request.getRequestDispatcher("login.jsp");
         rd.forward(request, response);
     }
 

@@ -27,6 +27,7 @@
         <ul>
             <li><a href="UserList">Acceder al listado de usuarios</a></li>
             <li><a href="EventList">Acceder al listado de eventos</a></li>
+            <li><a href="Logout">Cerrar sesión</a></li>
         </ul>
     </body>
 </html>
