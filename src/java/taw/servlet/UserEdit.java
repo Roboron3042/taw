@@ -21,8 +21,7 @@ import taw.entity.Usuario;
  *
  * @author rober
  */
-public class Registro extends HttpServlet {
-
+public class UserEdit extends HttpServlet {
     
     @EJB
     UsuarioFacade usuarioFacade;
@@ -38,51 +37,24 @@ public class Registro extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
-        String status = "Usuario creado satisfactoriamente, inicie sesión para continuar.";
-        String url = "login.jsp";
-        HttpSession sesion = request.getSession();
-        Usuario sesionUser = (Usuario) sesion.getAttribute("user");
-        if(sesionUser != null && sesionUser.getRol().equals("admin")){
-            url = "UserList";
-        }
-        Usuario user = usuarioFacade.findByEmail((String) request.getParameter("email"));
         
-        if(user != null){
-            if(sesionUser != null && sesionUser.getRol().equals("admin")){
-                user.setCorreo(request.getParameter("email"));
-                user.setPassword(request.getParameter("password"));
-                user.setNombre(request.getParameter("name"));
-                user.setApellidos(request.getParameter("surname"));
-                user.setDomicilio(request.getParameter("address"));
-                user.setResidencia(request.getParameter("home"));
-                user.setEdad(Integer.parseInt(request.getParameter("age")));
-                user.setSexo(request.getParameter("sex"));
-                user.setRol(request.getParameter("rol"));
-                usuarioFacade.edit(user);
-            } else {
-                status = "Este correo ya está en uso";
-                url = "registro.jsp";
-            }
+        HttpSession session = request.getSession();
+        Usuario sessionUser = (Usuario) session.getAttribute("user");
+        if (sessionUser == null) { 
+            response.sendRedirect("login.jsp");
+        } else if (!sessionUser.getRol().equals("admin")){
+            response.sendRedirect("userHome.jsp");
         } else {
-            user = new Usuario();
-            System.out.println((String) request.getParameter("email"));
-            user.setCorreo(request.getParameter("email"));
-            user.setPassword(request.getParameter("password"));
-            user.setNombre(request.getParameter("name"));
-            user.setApellidos(request.getParameter("surname"));
-            user.setDomicilio(request.getParameter("address"));
-            user.setResidencia(request.getParameter("home"));
-            user.setEdad(Integer.parseInt(request.getParameter("age")));
-            user.setSexo(request.getParameter("sex"));
-            user.setRol(request.getParameter("rol"));
-            usuarioFacade.create(user);
+            String email = request.getParameter("email");
+            if(email != null){
+                Usuario user = usuarioFacade.findByEmail(email);
+                if(user != null){
+                    request.setAttribute("userEdit", user);
+                }
+            }
+            RequestDispatcher rd = request.getRequestDispatcher("registro.jsp");
+            rd.forward(request, response);
         }
-        
-        
-        request.setAttribute("status", status);
-        RequestDispatcher  rd = request.getRequestDispatcher(url);
-        rd.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

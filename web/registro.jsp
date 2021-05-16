@@ -12,45 +12,78 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Registro</title>
     </head>
+    <%
+        String emailEdit = "", passwordEdit = "", nameEdit = "", surnameEdit = "", addressEdit = "",
+            homeEdit = "", ageEdit = "18", sexEdit = "", rolEdit ="user";
+        Usuario userEdit = (Usuario) request.getAttribute("userEdit");
+        
+        if(userEdit != null){
+            emailEdit = userEdit.getCorreo(); 
+            passwordEdit = userEdit.getPassword();
+            nameEdit = userEdit.getNombre();
+            surnameEdit = userEdit.getApellidos();
+            addressEdit = userEdit.getDomicilio();
+            homeEdit = userEdit.getResidencia();
+            ageEdit = userEdit.getEdad().toString();
+            sexEdit = userEdit.getSexo();
+            rolEdit = userEdit.getRol();
+        }
+        
+        String hidden = "hidden";
+        Usuario sessionUser = (Usuario) session.getAttribute("user");
+        if(sessionUser != null){
+            if(sessionUser.getRol().equals("admin")){
+                hidden = "";
+            } else {
+            response.sendRedirect("userHome.jsp");
+            }
+        }
+        
+    %>
     <body>
         <form method="post" action="Registro">
             <h1>Formulario de Registro</h1>
            
             Correo:<br>
-            <input type="text" name="email" maxlength ="50" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required/><br><br>
+            <input type="text" name="email" value="<%=emailEdit%>" maxlength ="50" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required/><br><br>
             Contraseña:<br>
-            <input type="text" name="password" minlength="8" maxlength ="50" required/><br><br>
+            <input type="text" name="password" value="<%=passwordEdit%>" minlength="8" maxlength ="50" required/><br><br>
             Nombre:<br>
-            <input type="text" name="name" maxlength ="50" pattern="[A-Za-zÀ-ÿ\u00f1\u00d1]+" required/><br><br>
+            <input type="text" name="name" value="<%=nameEdit%>" maxlength ="50" pattern="[A-Za-zÀ-ÿ\u00f1\u00d1]+" required/><br><br>
             Apellidos:<br>
-            <input type="text" name="surname" maxlength ="50" pattern="[A-Za-zÀ-ÿ\u00f1\u00d1]+" required/><br><br>
+            <input type="text" name="surname" value="<%=surnameEdit%>" maxlength ="50" pattern="[A-Za-zÀ-ÿ\u00f1\u00d1]+" required/><br><br>
             Domicilio:<br>
-            <input type="text" name="address" maxlength ="50" pattern="[A-Za-zÀ-ÿ\u00f1\u00d10-9]+" required/><br><br>
+            <input type="text" name="address" value="<%=addressEdit%>" maxlength ="50" pattern="[A-Za-zÀ-ÿ\u00f1\u00d10-9]+" required/><br><br>
             Residencia:<br>
-            <input type="text" name="home" maxlength ="50" pattern="[A-Za-zÀ-ÿ\u00f1\u00d10-9]+" required/><br><br>
+            <input type="text" name="home" value="<%=homeEdit%>" maxlength ="50" pattern="[A-Za-zÀ-ÿ\u00f1\u00d10-9]+" required/><br><br>
             Edad:<br>
-            <input type="number" name="age" value="20" pattern="[0-9]" required/><br><br>
+            <input type="number" name="age" value="<%=ageEdit%>" pattern="[0-9]" required/><br><br>
             Sexo:<br>
-            <input type="text" name="sex" maxlength ="50" pattern="[A-Za-zÀ-ÿ\u00f1\u00d1]+" required/><br><br>
-            Rol:<br>
-            <select name="rol">
+            <input type="text" name="sex" value="<%=sexEdit%>" maxlength ="50" pattern="[A-Za-zÀ-ÿ\u00f1\u00d1]+" required/><br><br>
+            <p <%=hidden%>>Rol:<br>
+            <select name="rol" selected="<%=rolEdit%>">
+                <%  if(rolEdit.equals("user")){ %>
+                <option selected>user</option>
+                <%  } else { %>
                 <option>user</option>
-                <%
-                Usuario sessionUser = (Usuario) session.getAttribute("user");
-                if(sessionUser != null){
-                    if(sessionUser.getRol().equals("admin")){
-                %>
+                <%  } if(rolEdit.equals("admin")){ %>
+                <option selected>admin</option>
+                <%  } else {    %>
                 <option>admin</option>
+                <%  } if(rolEdit.equals("creator")){ %>
+                <option selected>creator</option>
+                <%  } else {    %>
                 <option>creator</option>
+                <%  } if(rolEdit.equals("teleoperator")){%>
+                <option selected>teleoperator</option>
+                <%  } else {    %>
                 <option>teleoperator</option>
+                <%  } if(rolEdit.equals("analyst")){ %>
+                <option selected>analyst</option>
+                <%  } else {    %>
                 <option>analyst</option>
-                <%
-                    } else {
-                        response.sendRedirect("userHome.jsp");
-                    }
-                }
-                %>
-            </select><br><br>
+                <%  }   %>
+            </select></p>
             <%
             String status = (String) request.getAttribute("status");
             if (status == null) {
