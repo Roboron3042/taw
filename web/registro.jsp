@@ -59,9 +59,19 @@
             Edad:<br>
             <input type="number" name="age" value="<%=ageEdit%>" pattern="[0-9]" required/><br><br>
             Sexo:<br>
-            <input type="text" name="sex" value="<%=sexEdit%>" maxlength ="50" pattern="[A-Za-zÀ-ÿ\u00f1\u00d1]+" required/><br><br>
+            <select name="sex">
+                <%  if(sexEdit.equals("Masculino")){ %>
+                <option selected>Masculino</option>
+                <%  } else { %>
+                <option>Masculino</option>
+                <%  } if(sexEdit.equals("Femenino")){ %>
+                <option selected>Femenino</option>
+                <%  } else {    %>
+                <option>Femenino</option>
+                <%  }   %>
+            </select><br><br>
             <p <%=hidden%>>Rol:<br>
-            <select name="rol" selected="<%=rolEdit%>">
+            <select name="rol">
                 <%  if(rolEdit.equals("user")){ %>
                 <option selected>user</option>
                 <%  } else { %>
